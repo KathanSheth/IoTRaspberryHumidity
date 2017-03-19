@@ -4,7 +4,7 @@ import Adafruit_DHT
 import os
 
 mqttc=mqtt.Client()
-mqttc.connect("172.20.10.10",1883,60)
+mqttc.connect("iot.eclipse.org",1883,60)
 mqttc.loop_start()
 
 print "inside Humidity sensor"
@@ -19,9 +19,10 @@ def read_temp_data():
 #publish temperature
 while 1:
 	t=read_temp_data()
-	print "Publishing Humidity data"
+	print "Publish Humidity data"
 	device_uuid=os.environ['RESIN_DEVICE_UUID'];
 	print device_uuid
+	print t
 	(result,mid)=mqttc.publish("topic/GeneralizedIoT/"+str(device_uuid),t,2)
 	time.sleep(1)
 
